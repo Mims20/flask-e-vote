@@ -1,0 +1,125 @@
+{% extends "index.html" %}
+
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block style %}
+    {{ super() }}
+    <link href="{{ url_for('static', filename='css/signin.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<main class="form-signin w-100 m-auto">
+    <form method="post" action="{{ url_for('vote.cast_vote') }}" novalidate>
+        <!-- Fieldset with legend to group the form elements and provide a caption -->
+        <fieldset>
+            <legend class="border-bottom mb-4">Please vote below</legend>
+
+            <!-- Hidden tag to store CSRF token and other hidden fields -->
+            {{ president_form.hidden_tag() }}
+
+            <!-- Form group for Presidential Candidates selection -->
+            <div class="form-group">
+                <!-- Label for Presidential Candidates selection -->
+                <h4>{{ president_form.president.label(class="form-control-label") }} </h4>
+                <br><br>
+
+                <!-- Loop through the list of Presidential Candidates and display them as radio buttons -->
+                {% for full_name, image in president_form.president.choices %}
+                <div class="form-check form-check-inline">
+                    <!-- Radio button for the current Presidential Candidate -->
+                    <input class="form-check-input" type="radio" name="president" value="{{ full_name }}">
+
+                    <!-- Label for the current Presidential Candidate -->
+                    <label class="form-check-label">
+                        {{ full_name }}
+                        <br>
+                        <br>
+                        <img src="{{ url_for('static', filename='candidate_pics/' + image) }}" height="100" width="100">
+                    </label>
+                {% endfor %}
+
+                <!-- Display validation errors if any -->
+                {% if president_form.president.errors %}
+                    <div class="invalid-feedback" style="display: block;">
+                        {{ president_form.president.errors[0] }}
+                    </div>
+                {% endif %}
+                </div>
+                <br>
+                <br>
+                <!-- Submit button for Presidential Candidates selection -->
+                <div class="form-group">
+                    {{ president_form.submit_president(class="btn btn-outline-info") }}
+                </div>
+            </div>
+            <br>
+            <br>
+            <!-- Form group for Vice Presidential Candidates selection -->
+            <div class="form-group">
+                <!-- Label for Vice Presidential Candidates selection -->
+                <h4> {{ vice_form.vice.label(class="form-control-label") }} </h4>
+                <br><br>
+
+                <!-- Loop through the list of Vice Presidential Candidates and display them as radio buttons -->
+                {% for full_name, image in vice_form.vice.choices %}
+                <div class="form-check form-check-inline">
+                    <!-- Radio button for the current Vice Presidential Candidate -->
+                    <input class="form-check-input" type="radio" name="vice" value="{{ full_name }}">
+
+                    <!-- Label for the current Vice Presidential Candidate -->
+                    <label class="form-check-label">
+                        {{ full_name }}
+                        <br>
+                        <br>
+                        <img src="{{ url_for('static', filename='candidate_pics/' + image) }}" height="100" width="100">
+                    </label>
+                {% endfor %}
+
+                <!-- Display validation errors if any -->
+                {% if vice_form.vice.errors %}
+                    <div class="invalid-feedback" style="display: block;">
+                        {{ vice_form.vice.errors[0] }}
+                    </div>
+                {% endif %}
+                </div>
+                <br>
+                <br>
+                <!-- Submit button for Vice Presidential Candidates selection -->
+                <div class="form-group">
+                    {{ vice_form.submit_vice(class="btn btn-outline-info") }}
+                </div>
+            </div>
+            <br>
+            <br>
+              <div class="form-group">
+                  <h4> {{ secretary_form.secretary.label(class="form-control-label") }} </h4> <!-- Display label for the secretary field -->
+                  <br>
+                  <br>
+                  {% for full_name, image in secretary_form.secretary.choices %} <!-- Loop through the choices for secretary -->
+                  <div class="form-check form-check-inline"> <!-- Add form-check class to inline the radio buttons -->
+                    <input class="form-check-input" type="radio" name="secretary" value="{{ full_name }}"> <!-- Create radio button with the name and value set as the choice -->
+                    <label class="form-check-label">
+                      {{ full_name }} <!-- Display the candidate name -->
+                        <br>
+                        <br>
+                        <img src="{{ url_for('static', filename='candidate_pics/' + image) }}" height="100" width="100"> <!-- Display the candidate image -->
+                    </label>
+                  {% endfor %}
+
+                  {% if secretary_form.secretary.errors %} <!-- Check if there is any validation error for the secretary field -->
+                    <div class="invalid-feedback" style="display: block;"> <!-- Display validation error if any -->
+                      {{ secretary_form.secretary.errors[0] }}
+                    </div>
+                  {% endif %}
+                  </div>
+                  <br>
+                  <br>
+                  <div class="form-group">
+                    {{ secretary_form.submit_secretary(class="btn btn-outline-info") }} <!-- Add submit button with Bootstrap class -->
+                  </div>
+                </div>
+       </fieldset>
+    </form>
+</main>
+{% endblock %}
+

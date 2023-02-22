@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en" class="h-100">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.104.2">
+    <title>E-Vote</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+    {% block style %}
+    <link href="{{ url_for('static', filename='/css/cover.css') }}" rel="stylesheet">
+    {% endblock %}
+</head>
+
+<body class="d-flex h-100 text-center text-bg-dark">
+
+
+<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+
+    <header class="mb-auto">
+        <div>
+            <h3 class="float-md-start mb-0">E-Vote</h3>
+            <nav class="nav nav-masthead float-md-end justify-content-end">
+                <a class="nav-link fw-bold py-1 px-0 active" aria-current="page" href="{{ url_for('main.home') }}">Home</a>
+<!--                <a class="nav-link fw-bold py-1 px-0" href="{{ url_for('user.register') }}">Register</a>-->
+<!--                <a class="nav-link fw-bold py-1 px-0" href="{{ url_for('auth.login') }}">Login</a>-->
+                <a class="nav-link fw-bold py-1 px-0" href="#">Results</a>
+                {% if current_user.is_authenticated %}
+                <a class="nav-link fw-bold py-1 px-0" href="{{ url_for('auth.logout' )}}">Log Out</a>
+                {% endif %}
+                <a class="nav-link fw-bold py-1 px-0" href="{{ url_for('candidate.all_candidates') }}">Candidates</a>
+                {% if current_user.id == 1 %}
+                <a class="nav-link fw-bold py-1 px-0" href="{{ url_for('candidate.add_candidate') }}">Add Candidate</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+
+    <main class="px-3">
+        <div class="row">
+            <div class="col-md-8">
+              {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                  {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                      {{ message }}
+                    </div>
+                  {% endfor %}
+                {% endif %}
+              {% endwith %}
+            </div>
+        </div>
+        {% block content %}
+            <h1>Vote Now!!</h1>
+            {% if current_user.is_authenticated %}
+            <p class="lead">Click vote below</p>
+            {% else %}
+            <p class="lead">Register or Login to vote</p>
+            {% endif %}
+            <p class="lead">
+                {% if current_user.is_authenticated %}
+                <a href="{{ url_for('vote.cast_vote') }}" class="btn btn-lg btn-secondary fw-bold border-white bg-white">Vote</a>
+                {% else %}
+                <a href="{{ url_for('user.register') }}" class="btn btn-lg btn-secondary fw-bold border-white bg-white">Register</a>
+                <a href="{{ url_for('auth.login') }}" class="btn btn-lg btn-secondary fw-bold border-white bg-white">Login</a>
+                {% endif %}
+            </p>
+        {% endblock %}
+    </main>
+    <footer class="mt-auto text-white-50">
+<!--        <p>Cover template for <a href="https://getbootstrap.com/" class="text-white">Bootstrap</a>, by <a-->
+<!--                href="https://twitter.com/mdo" class="text-white">@mdo</a>.</p>-->
+    </footer>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+</body>
+</html>

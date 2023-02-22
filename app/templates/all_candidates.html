@@ -1,0 +1,58 @@
+{% extends "index.html" %}
+
+{% block style %}
+    {{ super() }}
+  <style>
+    th,
+      td {
+        color: white !important;
+      }
+  </style>
+{% endblock %}
+
+
+{% block content %}
+<main class="form-signin w-100 m-auto">
+
+    <div class="container">
+      <h1 class="text-center my-5">All Candidates</h1>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Position</th>
+            <th>Image</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Insert data from database here -->
+          {% for candidate in candidates %}
+          <tr>
+            <td class="text-center align-middle">{{ candidate.first_name }}</td>
+            <td class="text-center align-middle">{{ candidate.last_name }}</td>
+            <td class="text-center align-middle">{{ candidate.position }}</td>
+            <td>
+              <img
+                src="{{ url_for('static', filename='candidate_pics/' + candidate.image)}}"
+                alt="employee"
+                class="img-thumbnail"
+                height="100"
+                width="100"
+              />
+            </td>
+            <td class="text-center align-middle">
+              <a href="{{ url_for('candidate.update_candidate', candidate_id=candidate.id) }}" class="btn btn-warning my-1">Update</a>
+              <br>
+              <a href="{{ url_for('candidate.delete_candidate', candidate_id=candidate.id) }}" class="btn btn-danger">Delete</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+</main>
+
+{% endblock %}

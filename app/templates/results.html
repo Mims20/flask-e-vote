@@ -1,0 +1,36 @@
+{% block content %}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Presidential Candidates</th>
+            <th>Votes</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for candidate, votes in presidential_results.items() %}
+        <tr>
+            <td>{{ candidate }}</td>
+            <td>{{ votes }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Secretarial Candidates</th>
+            <th>Votes</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for candidate, votes in secretarial_results.items() %}
+        <tr>
+            <td>{{ candidate }}</td>
+            <td>{{ votes }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
