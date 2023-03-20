@@ -56,31 +56,39 @@ def all_candidates():
 
 
 # update candidate info
-@candidate.route("/update/<int:candidate_id>")
+@candidate.route("/update/<int:candidate_id>", methods=["GET", "POST"])
 @login_required
 def update_candidate(candidate_id):
+    form = CandidateForm()
     candidate_to_update = Candidate.query.filter_by(id=candidate_id).first()
-    if candidate_to_update:
+    if request.method == "GET":
+        if candidate_to_update:
+            return render_template("update.html", form=form, candidate=candidate_to_update)
 
-        return render_template("update.html", candidate=candidate_to_update)
-    # db.session.delete(candidate_to_delete)
-    # db.session.commit()
-    print(candidate_to_update.first_name)
+    elif request.method == "POST":
+        form_data = schemas.UpdateForm(**form.data)
 
-    return redirect(url_for("candidate.all_candidates"))
+        candidate_to_update.first_name = form_data.first_name
+        candidate_to_update.last_name = form_data.last_name
+        candidate_to_update.position = form_data.position
+
+        db.session.commit()
+
+        flash(message="Candidate info successfully updated",
+              category="success")
+        # print(candidate_to_update.id)
+
+        return redirect(url_for("candidate.all_candidates"))
 
 
 # delete candidate
-@candidate.route("/delete/<int:candidate_id>")
+@candidate.route("/delete")
 @login_required
-def delete_candidate(candidate_id):
-    # if request.method == "POST":
-    candidate_to_delete = Candidate.query.filter_by(id=candidate_id).first()
+def delete_candidate():
+    candidate_id = request.args.get("candidate_id")
+    candidate_to_delete = Candidate.query.get(candidate_id)
 
-    # db.session.delete(candidate_to_delete)
-    # db.session.commit()
-    print(candidate_to_delete.first_name)
+    db.session.delete(candidate_to_delete)
+    db.session.commit()
 
     return redirect(url_for("candidate.all_candidates"))
-
-

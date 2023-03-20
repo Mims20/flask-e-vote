@@ -80,7 +80,7 @@
     {% if current_user.id == 1 %}
     <div class="border-top pt-3">
         <small class="">
-            Edit or delete a candidate instead? <a class="ml-2" href="{{ url_for('auth.login') }}">Edit/Delete</a>
+            Edit or delete a candidate instead? <a class="ml-2" href="{{ url_for('candidate.all_candidates') }}">Edit/Delete</a>
         </small>
     </div>
     {% endif %}

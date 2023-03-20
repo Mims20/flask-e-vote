@@ -35,11 +35,13 @@ def create_app():
     from app.routes.auth import auth
     from app.routes.candidate import candidate
     from app.routes.vote import vote
+    from app.routes.result import result
 
     app.register_blueprint(main)
     app.register_blueprint(user)
     app.register_blueprint(auth)
     app.register_blueprint(candidate)
     app.register_blueprint(vote)
+    app.register_blueprint(result)
 
     return app

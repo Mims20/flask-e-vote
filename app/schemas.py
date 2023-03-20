@@ -30,3 +30,9 @@ class Candidate(BaseModel):
 
 class TokenData(BaseModel):
     id: Optional[str] = None
+
+
+class UpdateForm(BaseModel):
+    first_name: str
+    last_name: str
+    position: str

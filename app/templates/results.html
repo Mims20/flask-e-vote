@@ -1,3 +1,13 @@
+{% extends "index.html" %}
+{% block style %}
+    {{ super() }}
+  <style>
+    th,
+      td {
+        color: white !important;
+      }
+  </style>
+{% endblock %}
 {% block content %}
 <table class="table table-striped">
     <thead>
@@ -7,7 +17,7 @@
         </tr>
     </thead>
     <tbody>
-        {% for candidate, votes in presidential_results.items() %}
+        {% for candidate, votes in presidential_results %}
         <tr>
             <td>{{ candidate }}</td>
             <td>{{ votes }}</td>
@@ -24,7 +34,7 @@
         </tr>
     </thead>
     <tbody>
-        {% for candidate, votes in secretarial_results.items() %}
+        {% for candidate, votes in secretarial_results %}
         <tr>
             <td>{{ candidate }}</td>
             <td>{{ votes }}</td>

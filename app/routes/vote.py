@@ -9,7 +9,7 @@ vote = Blueprint("vote", __name__)
 
 
 def get_presidential_choices():
-    return [(candidate.first_name + " " + candidate.last_name, candidate.image) for candidate in
+    return [candidate for candidate in
             Candidate.query.filter_by(position="President").all()]
 
     # update choices list with a default that's not a candidate
@@ -17,12 +17,12 @@ def get_presidential_choices():
 
 
 def get_vice_choices():
-    return [(candidate.first_name + " " + candidate.last_name, candidate.image) for candidate in
+    return [candidate for candidate in
             Candidate.query.filter_by(position="Vice President").all()]
 
 
 def get_secretarial_choices():
-    return [(candidate.first_name + " " + candidate.last_name, candidate.image) for candidate in
+    return [candidate for candidate in
             Candidate.query.filter_by(position="Secretary").all()]
 
 
@@ -39,6 +39,7 @@ def cast_vote():
     secretarial_form.secretary.choices = get_secretarial_choices()
 
     if request.form.get("submit_president") and presidential_form.validate_on_submit():
+        print("president voted")
         # if presidential_form.president.data != "Click and make selection":
         candidate_name = request.form.get("president")
         print(candidate_name)

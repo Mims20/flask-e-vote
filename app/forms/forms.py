@@ -1,9 +1,13 @@
+from flask import current_app
+
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, SubmitField, PasswordField, SelectField, RadioField
 from wtforms.validators import DataRequired, Length, EqualTo, ValidationError, Email
 
 from app import models
+# from app.main import app
+from app.models import Candidate
 
 
 class RegisterForm(FlaskForm):
@@ -37,19 +41,46 @@ class CandidateForm(FlaskForm):
     submit = SubmitField("Add Candidate")
 
 
+# def get_presidential_choices():
+#     with current_app.app_context():
+#         return [candidate for candidate in
+#                 Candidate.query.filter_by(position="President").all()]
+
+    # update choices list with a default that's not a candidate
+    # presidential_form.president.choices.insert(0, "Click and make selection")
+
+
+# def get_vice_choices():
+#     with current_app.app_context():
+#         return [candidate for candidate in
+#                 Candidate.query.filter_by(position="Vice President").all()]
+
+
+# def get_secretarial_choices():
+#     with current_app.app_context():
+#         return [candidate for candidate in
+#                 Candidate.query.filter_by(position="Secretary").all()]
+
+
 class PresidentVoteForm(FlaskForm):
+    # query candidate db and update form choices with candidates
+    # presiddent_choices = get_presidential_choices()
     president = RadioField("Presidential", validators=[DataRequired()],
                            choices=[])
     submit_president = SubmitField('Vote')
 
 
 class ViceVoteForm(FlaskForm):
+    # query candidate db and update form choices with candidates
+    # vice_choices = get_vice_choices()
     vice = RadioField("Vice Presidential", validators=[DataRequired()],
                       choices=[])
     submit_vice = SubmitField('Vote')
 
 
 class SecretaryVoteForm(FlaskForm):
+    # query candidate db and update form choices with candidates
+    # secretary_choices = get_secretarial_choices()
     secretary = RadioField("Secretarial", validators=[DataRequired()],
                            choices=[])
     submit_secretary = SubmitField('Vote')

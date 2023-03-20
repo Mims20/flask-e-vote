@@ -42,11 +42,13 @@
                 width="100"
               />
             </td>
+            {% if current_user.id == 1 %}
             <td class="text-center align-middle">
-              <a href="{{ url_for('candidate.update_candidate', candidate_id=candidate.id) }}" class="btn btn-warning my-1">Update</a>
+              <a href="{{ url_for('candidate.update_candidate', candidate_id=candidate.id) }}" class="btn btn-warning my-1">Edit Info</a>
               <br>
-              <a href="{{ url_for('candidate.delete_candidate', candidate_id=candidate.id) }}" class="btn btn-danger">Delete</a>
+              <a href="{{ url_for('candidate.delete_candidate', candidate_id=candidate.id) }}" data-method="delete" class="btn btn-danger">Delete</a>
             </td>
+            {% endif %}
           </tr>
           {% endfor %}
         </tbody>
