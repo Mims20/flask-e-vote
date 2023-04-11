@@ -5,68 +5,75 @@
 {% block style %}
     {{ super() }}
     <link href="{{ url_for('static', filename='css/signin.css') }}" rel="stylesheet">
+
 {% endblock %}
+
+
 
 {% block content %}
 <main class="form-signin w-100 m-auto">
+
     <div class="container">
       <form method="POST" action="{{ url_for('vote.cast_vote') }}">
           {{ president_form.csrf_token }}
-          <h3>{{ president_form.president.label }}</h3>
-<!--          <br>-->
-        <div class="row">
-          {% for candidate in president_form.president.choices %}
-          <div class="col-md-4">
-            <label>
-                <input type="radio" name="president" value="{{ candidate.id }}">
-                <img src="{{ url_for('static', filename='candidate_pics/' + candidate.image) }}" class="img-fluid">
-                <p class="mb-0 ms-2">{{ candidate.first_name }} {{ candidate.last_name }}</p>
-            </label>
-          </div>
-          {% endfor %}
 
-        <!-- Display validation errors if any -->
-        {% if president_form.president.errors %}
-            <div class="invalid-feedback" style="display: block;">
-                {{ president_form.president.errors[0] }}
-            </div>
-<!--            <br>-->
-        {% endif %}
+          <div class="row">
+              <h3>{{ president_form.president.label }}</h3>
+              <br>
+              <br>
+              <br>
+              {% for candidate in president_form.president.choices %}
+              <div class="col-md-4">
+                  <label>
+                    <input type="radio" name="president" value="{{ candidate.id }}">
+                    <img src="{{ url_for('static', filename='candidate_pics/' + candidate.image) }}" class="img-fluid">
+                    <p class="mb-0 ms-2">{{ candidate.first_name }} {{ candidate.last_name }}</p>
+                  </label>
+              </div>
+              {% endfor %}
+
+            <!-- Display validation errors if any -->
+            {% if president_form.president.errors %}
+                <div class="invalid-feedback" style="display: block;">
+                    {{ president_form.president.errors[0] }}
+                </div>
+            {% endif %}
         </div>
         <br>
         <div class="form-group">
             {{ president_form.submit_president(class="btn btn-outline-info") }}
         </div>
       </form>
-        <br>
+        <hr>
 
-        <form method="POST" action="{{ url_for('vote.cast_vote') }}">
+<!--  <div class="container">-->
+      <form method="POST" action="{{ url_for('vote.cast_vote') }}">
           {{ secretary_form.csrf_token }}
           <h3>{{ secretary_form.secretary.label }}</h3>
-<!--          <br>-->
-        <div class="row">
-          {% for candidate in secretary_form.secretary.choices %}
-          <div class="col-md-4">
-              <label>
-              <input type="radio" name="secretary" value="{{ candidate.value }}">
-                <img src="{{ url_for('static', filename='candidate_pics/' + candidate.image) }}" class="img-fluid">
-                <p>{{ candidate.first_name }} {{ candidate.last_name }}</p>
-              </label>
-          </div>
-          {% endfor %}
+            <br>
+            <div class="row">
+              {% for candidate in secretary_form.secretary.choices %}
+              <div class="col-md-4">
+                  <label>
+                      <input type="radio" name="secretary" value="{{ candidate.id }}">
+                      <img src="{{ url_for('static', filename='candidate_pics/' + candidate.image) }}" class="img-fluid">
+                      <p>{{ candidate.first_name }} {{ candidate.last_name }}</p>
+                  </label>
+              </div>
+              {% endfor %}
 
-        <!-- Display validation errors if any -->
-        {% if secretary_form.secretary.errors %}
-            <div class="invalid-feedback" style="display: block;">
-                {{ secretary_form.secretary.errors[0] }}
+            <!-- Display validation errors if any -->
+            {% if secretary_form.secretary.errors %}
+                <div class="invalid-feedback" style="display: block;">
+                    {{ secretary_form.secretary.errors[0] }}
+                </div>
+            {% endif %}
             </div>
-        {% endif %}
-        </div>
 
-        <div class="form-group">
-            {{ secretary_form.submit_secretary(class="btn btn-outline-info") }}
-        </div>
-      </form>
+            <div class="form-group">
+                {{ secretary_form.submit_secretary(class="btn btn-outline-info") }}
+            </div>
+        </form>
     </div>
 </main>
 {% endblock %}

@@ -11,6 +11,7 @@
 {% block content %}
 <main class="form-signin w-100 m-auto">
 
+{% if current_user.id == 1%}
 <div class="container">
     <h2>Update Candidate Info</h2>
     <br>
@@ -41,6 +42,6 @@
         <button type="submit" class="btn btn-outline-info">Update Candidate</button>
     </form>
 </div>
-
+{% endif %}
 </main>
 {% endblock %}

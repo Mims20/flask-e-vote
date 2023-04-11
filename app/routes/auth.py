@@ -12,7 +12,7 @@ auth = Blueprint("auth", __name__)
 @auth.route("/login", methods=["GET", "POST"])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for("auth.login"))
+        return redirect(url_for("main.home"))
 
     form = LoginForm()
 
@@ -29,8 +29,9 @@ def login():
             return redirect(url_for('auth.login'))
 
         else:
-            login_user(user)
-            return redirect(url_for("main.home"))
+            login_user(user, remember=form.remember.data)
+            next_page = request.args.get('next')
+            return redirect(next_page) if next_page else redirect(url_for('main.home'))
 
     return render_template("signin.html", form=form, current_user=current_user)
 

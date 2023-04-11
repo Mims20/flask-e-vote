@@ -36,6 +36,7 @@ def create_app():
     from app.routes.candidate import candidate
     from app.routes.vote import vote
     from app.routes.result import result
+    from app.routes.errors.handlers import errors
 
     app.register_blueprint(main)
     app.register_blueprint(user)
@@ -43,5 +44,6 @@ def create_app():
     app.register_blueprint(candidate)
     app.register_blueprint(vote)
     app.register_blueprint(result)
+    app.register_blueprint(errors)
 
     return app

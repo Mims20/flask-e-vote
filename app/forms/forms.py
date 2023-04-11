@@ -2,7 +2,7 @@ from flask import current_app
 
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
-from wtforms import StringField, SubmitField, PasswordField, SelectField, RadioField
+from wtforms import StringField, SubmitField, PasswordField, SelectField, RadioField, BooleanField
 from wtforms.validators import DataRequired, Length, EqualTo, ValidationError, Email
 
 from app import models
@@ -28,6 +28,7 @@ class RegisterForm(FlaskForm):
 class LoginForm(FlaskForm):
     email = StringField("Email", validators=[DataRequired()])
     password = PasswordField("Password", validators=[DataRequired()])
+    remember = BooleanField("Remember Me")
     submit = SubmitField("Login")
 
 
@@ -67,7 +68,7 @@ class PresidentVoteForm(FlaskForm):
     # presiddent_choices = get_presidential_choices()
     president = RadioField("Presidential", validators=[DataRequired()],
                            choices=[])
-    submit_president = SubmitField('Vote')
+    submit_president = SubmitField('Submit Vote')
 
 
 class ViceVoteForm(FlaskForm):
@@ -83,4 +84,4 @@ class SecretaryVoteForm(FlaskForm):
     # secretary_choices = get_secretarial_choices()
     secretary = RadioField("Secretarial", validators=[DataRequired()],
                            choices=[])
-    submit_secretary = SubmitField('Vote')
+    submit_secretary = SubmitField('Submit Vote')
