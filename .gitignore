@@ -1,2 +1,4 @@
 alembic/
 .env
+docker-compose.yml
+Dockerfile

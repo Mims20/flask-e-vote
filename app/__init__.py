@@ -1,7 +1,7 @@
 from flask import Flask
 
 from flask_sqlalchemy import SQLAlchemy
-# from flask_bcrypt import Bcrypt
+
 from flask_login import LoginManager
 from flask_bootstrap import Bootstrap
 from flask_alembic import Alembic
@@ -26,7 +26,7 @@ def create_app():
     db.init_app(app)
     # bcrypt.init_app(app)
     login_manager.init_app(app)
-    # db.init_app(app)
+
     Bootstrap(app)
     alembic.init_app(app)
 

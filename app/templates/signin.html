@@ -1,6 +1,8 @@
 {% extends "index.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
+{% block title %}Login{% endblock %}
+
 {% block style %}
     {{ super() }}
     <link href="{{ url_for('static', filename='css/signin.css') }}" rel="stylesheet">
@@ -43,10 +45,6 @@
                     {{ form.password(class="form-control form-control-lg") }}
                 {% endif %}
             </div>
-            <div class="form-check">
-                    {{ form.remember(class="form-check-input") }}
-                    {{ form.remember.label(class="form-check-label") }}
-                </div>
         </fieldset>
           <br>
             <div class="form-group">

@@ -21,11 +21,22 @@ class Register(BaseModel):
     password: str
 
 
+class UserOut(BaseModel):
+    email: EmailStr
+
+
 # @form_body
 class Candidate(BaseModel):
     first_name: str
     last_name: str
     position: str
+
+
+class TestCandidate(BaseModel):
+    first_name: str
+    last_name: str
+    position: str
+    profile_picture: str
 
 
 class TokenData(BaseModel):

@@ -41,9 +41,9 @@ class Vote(db.Model):
     __tablename__ = "votes"
 
     id = Column(Integer, primary_key=True, nullable=False)
-    president = Column(String)
-    vice_president = Column(String)
-    secretary = Column(String)
+    president_id = Column(Integer, nullable=True)
+    vice_president_id = Column(Integer, nullable=True)
+    secretary_id = Column(Integer, nullable=True)
 
     # relationships
     user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)

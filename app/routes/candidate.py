@@ -32,18 +32,20 @@ def save_picture(profile_picture):
 @login_required
 def add_candidate():
     form = CandidateForm()
-    if form.validate_on_submit():
-        form_data = schemas.Candidate(**form.data)
-        new_candidate = Candidate(**form_data.dict())
-        new_candidate.image = save_picture(form.profile_picture.data)
-        # print(new_candidate.first_name, new_candidate.last_name, new_candidate.image)
-        db.session.add(new_candidate)
-        db.session.commit()
 
-        flash(message="Candidate added successfully",
-              category="success")
+    if request.method == "POST":
+        if form.validate_on_submit():
+            form_data = schemas.Candidate(**form.data)
+            new_candidate = Candidate(**form_data.dict())
+            new_candidate.image = save_picture(form.profile_picture.data)
+            # print(new_candidate.first_name, new_candidate.last_name, new_candidate.image)
+            db.session.add(new_candidate)
+            db.session.commit()
 
-        return redirect(url_for("candidate.add_candidate"))
+            flash(message="Candidate added successfully",
+                  category="success")
+
+            return redirect(url_for("candidate.add_candidate"))
 
     return render_template("candidate.html", form=form)
 

@@ -1,0 +1,35 @@
+version: "3"
+services:
+  web:
+    build: .
+    depends_on:
+      - db    # ideally, you want your db service to start first hence this step
+    ports:
+      - "5000:5000"
+    environment:
+      - DATABASE_USERNAME=postgres
+      - DATABASE_PASSWORD=0271249352
+      - DATABASE_HOSTNAME=db    #db here points to db service to resolve hostname automatically
+      - DATABASE_PORT=5432
+      - DATABASE_NAME=flask-evote
+      - SECRET_KEY=72bee1348d89e37479c47c5e9677771546723dcc2ec7649b969941ca6fe7298e
+      - ALGORITHM=HS256
+      - ACCESS_TOKEN_EXPIRE_MINUTES=30
+
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_USER=postgres # default is postgres, hence can be left out
+      - POSTGRES_PASSWORD=0271249352
+      - POSTGRES_DB=flask-evote
+
+#    create a volume to save data. format-database-name: default docker data save location
+    volumes:
+      - postgres-db:/var/lib/postgresql/data
+    ports:
+      - "5433:5433"
+    command: flask db upgrade head
+
+# define a global/named volume so other services can access
+volumes:
+  postgres-db: # name of volume you want accessed globally
